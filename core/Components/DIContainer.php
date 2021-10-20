@@ -15,7 +15,7 @@ final class DIContainer
 
 	/**
 	 * @param string $identifier
-	 * @param string $object
+	 * @param string $class
 	 * @param array $params
 	 */
 	public function bind(string $identifier, string $class, array $params): void
@@ -40,7 +40,7 @@ final class DIContainer
 		if (!isset($this->objects[$identifier])) {
 			return null;
 		}
-		return $this->objects[$identifier]->get();
+		return $this->objects[$identifier];
 	}
 
 }

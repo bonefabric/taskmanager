@@ -3,6 +3,8 @@
 namespace Core;
 
 use Core\Components\DIContainer;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class Application
 {
@@ -19,7 +21,6 @@ final class Application
 
 	private function __construct()
 	{
-		$this->container = new DIContainer();
 	}
 
 	/**
@@ -36,16 +37,17 @@ final class Application
 	public function init(): void
 	{
 		require_once ROOT_PATH . '/bootstrap/bootstrap.php';
+		$this->container = new DIContainer();
+		$this->container->bindSingleton(Request::createFromGlobals());
 	}
 
 	public function start(): void
 	{
-
 	}
 
 	public function finish(): void
 	{
-
+		(new Response('test'))->send();
 	}
 
 }
