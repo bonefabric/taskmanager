@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Components\DIContainer;
+
 final class Application
 {
 
@@ -10,8 +12,14 @@ final class Application
 	 */
 	private static Application $instance;
 
+	/**
+	 * @var DIContainer
+	 */
+	private DIContainer $container;
+
 	private function __construct()
 	{
+		$this->container = new DIContainer();
 	}
 
 	/**
