@@ -2,7 +2,7 @@
 
 namespace Core\Components\DIContainer;
 
-class DISingletonObject implements DIObjectInterface
+final class DISingletonObject implements DIObjectInterface
 {
 
 	/**
