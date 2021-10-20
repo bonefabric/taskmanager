@@ -13,11 +13,12 @@ $config = Setup::createAnnotationMetadataConfiguration([
 ], isset($_ENV['DEBUG']) && $_ENV['DEBUG'] === 'true');
 
 $connection = [
-  'driver' => 'pdo_pgsql',
-  'user' => 'taskmanager',
-  'password' => 'taskmanager229!',
-  'host' => 'localhost',
-  'port' => '5432'
+    'driver' => 'pdo_pgsql',
+    'user' => 'postgres',
+    'password' => '123456',
+    'host' => 'localhost',
+    'port' => '5432',
+    'schema' => 'taskmanager'
 ];
 
 $entityManager = EntityManager::create($connection, $config);
