@@ -5,19 +5,39 @@ namespace Core;
 final class Application
 {
 
-    public function init(): void
-    {
+	/**
+	 * @var Application
+	 */
+	private static Application $instance;
 
-    }
+	private function __construct()
+	{
+	}
 
-    public function start(): void
-    {
+	/**
+	 * @return Application
+	 */
+	public static function getInstance(): Application
+	{
+		if (!isset(self::$instance)) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 
-    }
+	public function init(): void
+	{
+		require_once ROOT_PATH . '/bootstrap/bootstrap.php';
+	}
 
-    public function finish(): void
-    {
+	public function start(): void
+	{
 
-    }
+	}
+
+	public function finish(): void
+	{
+
+	}
 
 }
