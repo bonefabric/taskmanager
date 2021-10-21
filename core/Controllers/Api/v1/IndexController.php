@@ -2,6 +2,7 @@
 
 namespace Core\Controllers\Api\v1;
 
+use Core\Components\Helpers\Template;
 use Core\Controllers\Api\ApiController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,6 @@ class IndexController extends ApiController
 	 */
 	public function index(): Response
 	{
-		return new Response(file_get_contents(ROOT_PATH . '/resources/templates/index.html'));
+		return new Response(Template::getTemplate('index'));
 	}
 }
