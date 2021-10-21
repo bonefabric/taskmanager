@@ -15,7 +15,7 @@ final class Router extends BaseFacade
 	/**
 	 * @return \Core\Components\Router\Router
 	 */
-	public static function get(): \Core\Components\Router\Router
+	public static function component(): \Core\Components\Router\Router
 	{
 		static::initComponent();
 		return static::$component;

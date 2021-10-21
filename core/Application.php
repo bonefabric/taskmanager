@@ -3,6 +3,7 @@
 namespace Core;
 
 use Core\Components\DIContainer\DIContainer;
+use Core\Components\Router\RouteInterface;
 use Core\Components\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,11 @@ final class Application
 	 * @var DIContainer
 	 */
 	private DIContainer $container;
+
+	/**
+	 * @var Response
+	 */
+	private Response $response;
 
 	private function __construct()
 	{
@@ -48,16 +54,28 @@ final class Application
 		}
 	}
 
+	/**
+	 * @throws \ReflectionException
+	 */
 	public function start(): void
 	{
-		$route = $this->container->get(Router::class);
-		$controller = $route->handle($this->container->get(Request::class));
-		dump($controller);
+		/** @var RouteInterface $route */
+		$route = $this->container->get(Router::class)->handle($this->container->get(Request::class));
+		$controllerClass = $route->getController();
+		$constructor = (new \ReflectionClass($controllerClass))->getConstructor();
+		$options = [];
+		if (!is_null($constructor)) {
+			foreach ($constructor->getParameters() as $parameter) {
+				is_null($parameter->getType()) ?: $options[$parameter->getPosition()] = $this->container->get($parameter->getType()->getName());
+			}
+		}
+		$controller = new $controllerClass(...$options);
+		$this->response = $controller->{$route->getControllerMethod()}();
 	}
 
 	public function finish(): void
 	{
-		(new Response('test'))->send();
+		$this->response->send();
 	}
 
 	/**

@@ -43,7 +43,7 @@ final class Router
 	 */
 	public function get(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_GET], $options);
+		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_GET], $options);
 	}
 
 	/**
@@ -54,7 +54,7 @@ final class Router
 	 */
 	public function post(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_POST], $options);
+		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_POST], $options);
 	}
 
 	/**
@@ -65,7 +65,7 @@ final class Router
 	 */
 	public function put(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_PUT], $options);
+		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_PUT], $options);
 	}
 
 	/**
@@ -76,7 +76,7 @@ final class Router
 	 */
 	public function patch(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_PATCH], $options);
+		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_PATCH], $options);
 	}
 
 	/**
@@ -87,7 +87,7 @@ final class Router
 	 */
 	public function delete(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_DELETE], $options);
+		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_DELETE], $options);
 	}
 
 	/**
@@ -97,7 +97,7 @@ final class Router
 	 */
 	public function fallback(string $controller, string $method = null, array $options = []): void
 	{
-		$this->fallbackRoute = new Route('', $controller, RouteInterface::METHODS_ALL, $options);
+		$this->fallbackRoute = new Route('', $controller, $method, RouteInterface::METHODS_ALL, $options);
 	}
 
 	/**

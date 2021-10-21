@@ -23,6 +23,11 @@ class Route implements RouteInterface
 	protected array $methods;
 
 	/**
+	 * @var string
+	 */
+	protected string $controllerMethod;
+
+	/**
 	 * @var array
 	 */
 	protected array $options;
@@ -33,10 +38,11 @@ class Route implements RouteInterface
 	 * @param array $methods
 	 * @param array $options
 	 */
-	public function __construct(string $path, string $controller, array $methods, array $options = [])
+	public function __construct(string $path, string $controller, string $controllerMethod, array $methods, array $options = [])
 	{
 		$this->path = $path;
 		$this->controller = $controller;
+		$this->controllerMethod = $controllerMethod;
 		$this->methods = $methods;
 		$this->options = $options;
 	}
@@ -47,7 +53,18 @@ class Route implements RouteInterface
 	 */
 	public function check(Request $request): bool
 	{
-		return true;
+		return $this->compare($request);
+	}
+
+	/**
+	 * @param Request $request
+	 * @return bool
+	 */
+	protected function compare(Request $request): bool
+	{
+		//TODO regex
+		return trim($request->server->get('REQUEST_URI'), '/') === trim($this->path, '/')
+			&& in_array(strtoupper($request->server->get('REQUEST_METHOD')), $this->methods, true);
 	}
 
 	/**
@@ -64,6 +81,14 @@ class Route implements RouteInterface
 	public function getController(): string
 	{
 		return $this->controller;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getControllerMethod(): string
+	{
+		return $this->controllerMethod;
 	}
 
 	/**

@@ -3,10 +3,18 @@
 namespace Core\Controllers\Api\v1;
 
 use Core\Controllers\Api\ApiController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends ApiController
 {
+
+	protected Request $request;
+
+	public function __construct(Request $request)
+	{
+		$this->request = $request;
+	}
 
 	/**
 	 * @return Response

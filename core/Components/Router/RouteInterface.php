@@ -37,6 +37,11 @@ interface RouteInterface
 	public function getController(): string;
 
 	/**
+	 * @return string
+	 */
+	public function getControllerMethod(): string;
+
+	/**
 	 * @return string[]
 	 */
 	public function getMethods(): array;
