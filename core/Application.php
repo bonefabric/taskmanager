@@ -70,7 +70,7 @@ final class Application
 			}
 		}
 		$controller = new $controllerClass(...$options);
-		$this->response = $controller->{$route->getControllerMethod()}();
+		$this->response = $controller->{$route->getControllerMethod()}(...array_values($route->getParams()));
 	}
 
 	public function finish(): void

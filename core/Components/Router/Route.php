@@ -94,7 +94,7 @@ class Route implements RouteInterface
 			}
 
 			if (preg_match('~^' . $this->options['patterns'][$key] . '$~', $uriPart)) {
-				$this->params[$key] = $uriPart;
+				$this->params[$key] = is_numeric($uriPart) ? (int)$uriPart : $uriPart;
 				continue;
 			}
 			return false;
@@ -152,6 +152,14 @@ class Route implements RouteInterface
 	public function getOptions(): array
 	{
 		return $this->options;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getParams(): array
+	{
+		return $this->params;
 	}
 
 }
