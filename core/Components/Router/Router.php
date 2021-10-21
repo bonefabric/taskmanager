@@ -38,9 +38,10 @@ final class Router
 	/**
 	 * @param string $path
 	 * @param string $controller
+	 * @param string|null $method
 	 * @param array $options
 	 */
-	public function get(string $path, string $controller, array $options = []): void
+	public function get(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_GET], $options);
 	}
@@ -48,9 +49,10 @@ final class Router
 	/**
 	 * @param string $path
 	 * @param string $controller
+	 * @param string|null $method
 	 * @param array $options
 	 */
-	public function post(string $path, string $controller, array $options = []): void
+	public function post(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_POST], $options);
 	}
@@ -58,9 +60,10 @@ final class Router
 	/**
 	 * @param string $path
 	 * @param string $controller
+	 * @param string|null $method
 	 * @param array $options
 	 */
-	public function put(string $path, string $controller, array $options = []): void
+	public function put(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_PUT], $options);
 	}
@@ -68,9 +71,10 @@ final class Router
 	/**
 	 * @param string $path
 	 * @param string $controller
+	 * @param string|null $method
 	 * @param array $options
 	 */
-	public function patch(string $path, string $controller, array $options = []): void
+	public function patch(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_PATCH], $options);
 	}
@@ -78,9 +82,10 @@ final class Router
 	/**
 	 * @param string $path
 	 * @param string $controller
+	 * @param string|null $method
 	 * @param array $options
 	 */
-	public function delete(string $path, string $controller, array $options = []): void
+	public function delete(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$this->routes[] = new Route($path, $controller, [RouteInterface::METHOD_DELETE], $options);
 	}
