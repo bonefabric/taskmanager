@@ -8,6 +8,7 @@ module.exports = {
         rules: [
             {test: /\.(js)$/, use: 'babel-loader'},
             {test: /\.vue$/, loader: 'vue-loader'},
+            {test: /\.scss$/, use: ['vue-style-loader', 'css-loader', 'sass-loader']}
         ]
     },
     output: {
@@ -18,6 +19,6 @@ module.exports = {
         new VueLoaderPlugin()
     ],
     resolve: {
-        extensions: [".vue"]
+        extensions: [".vue", ".js"]
     }
 }

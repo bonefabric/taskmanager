@@ -1,10 +1,10 @@
-import './bootstrap.js';
+require('./bootstrap');
 import Vue from "vue";
 
 import Application from "./Application";
 
-import router from "./router/index.js";
-import store from "./store/index.js";
+import router from "./router";
+import store from "./store";
 
 new Vue({
    el: '#app',
