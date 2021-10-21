@@ -17,3 +17,53 @@ use Core\Application;
 
 $router = Application::getInstance()->getComponent(\Core\Components\Router\Router::class);
 ```
+
+#### Методы для регистрации:
+
+```php
+// GET маршрут
+$router->get('/path', \Core\Controllers\Api\v1\IndexController::class, 'index');
+
+// POST маршрут
+$router->post('/path', \Core\Controllers\Api\v1\IndexController::class, 'index');
+
+// PUT маршрут
+$router->put('/path', \Core\Controllers\Api\v1\IndexController::class, 'index');
+
+// PATCH маршрут
+$router->patch('/path', \Core\Controllers\Api\v1\IndexController::class, 'index');
+
+// DELETE маршрут
+$router->delete('/path', \Core\Controllers\Api\v1\IndexController::class, 'index');
+
+// Ресурс
+$router->resource('resourceName', \Core\Controllers\Api\v1\IndexController::class);
+/**
+* Ресурс создает автоматически маршруты
+*/
+$router->get('/resourceName', \Core\Controllers\Api\v1\IndexController::class, 'index');
+$router->post('/resourceName', \Core\Controllers\Api\v1\IndexController::class, 'create');
+$router->patch('/resourceName/{id}', \Core\Controllers\Api\v1\IndexController::class, 'edit');
+$router->delete('/resourceName/{id}', \Core\Controllers\Api\v1\IndexController::class, 'delete');
+/**
+*
+*/
+
+// Группа маршрутов
+$router->group($options, function() {});
+
+// Запасной маршрут
+$router->fallback(\Core\Controllers\Api\v1\IndexController::class, 'fallbackMethod);
+```
+
+#### Параметры маршрутов:
+```php
+$router->get('/user/{id}/account/{name}', \Core\Controllers\Api\v1\IndexController::class, 'index', [
+    'patterns' => [
+        'id' => '\d+',
+        'name' => '.*'
+    ]
+```
+- _patterns_ - паттерны для проверки параметров
+
+Параметы передаются в вызываемый метод контроллера.

@@ -92,21 +92,11 @@ final class Router
 
 	/**
 	 * @param string $controller
-	 * @param string|null $method
 	 * @param array $options
 	 */
-	public function fallback(string $controller, string $method = null, array $options = []): void
+	public function resource(string $controller, array $options = []): void
 	{
-		$this->fallbackRoute = new Route('', $controller, $method, RouteInterface::METHODS_ALL, $options);
-	}
-
-	/**
-	 * @param string $controller
-	 * @param array $options
-	 */
-	public function api(string $controller, array $options = []): void
-	{
-
+		//TODO resource
 	}
 
 	/**
@@ -115,7 +105,17 @@ final class Router
 	 */
 	public function group(array $options, callable $group): void
 	{
+		//TODO group
+	}
 
+	/**
+	 * @param string $controller
+	 * @param string|null $method
+	 * @param array $options
+	 */
+	public function fallback(string $controller, string $method = null, array $options = []): void
+	{
+		$this->fallbackRoute = new Route('', $controller, $method, RouteInterface::METHODS_ALL, $options);
 	}
 
 }
