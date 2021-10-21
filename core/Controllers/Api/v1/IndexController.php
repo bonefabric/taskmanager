@@ -9,8 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 class IndexController extends ApiController
 {
 
+	/**
+	 * @var Request
+	 */
 	protected Request $request;
 
+	/**
+	 * @param Request $request
+	 */
 	public function __construct(Request $request)
 	{
 		$this->request = $request;
