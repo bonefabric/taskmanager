@@ -17,7 +17,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-div {
-	background-color: blueviolet;
+#application {
+	min-width: 100vw;
+	min-height: 100vh;
 }
 </style>
