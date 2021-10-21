@@ -34,8 +34,6 @@ class IndexController extends ApiController
 	 */
 	public function index(): Response
 	{
-		dump($this->entityManager->getRepository(Task::class)->findAll());
-
 		return new Response(Template::getTemplate('index'));
 	}
 }

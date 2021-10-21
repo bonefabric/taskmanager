@@ -1,10 +1,18 @@
 <template>
-  <h1>Application</h1>
+  <div>
+    <topMenu></topMenu>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+import topMenu from "./components/menus/topMenu";
+
 export default {
-  name: "Application"
+  name: "Application",
+  components: {
+    topMenu
+  }
 }
 </script>
 

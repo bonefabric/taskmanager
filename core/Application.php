@@ -30,6 +30,9 @@ final class Application
 
 	private function __construct()
 	{
+		if (!defined(ROOT_PATH)) {
+			define('ROOT_PATH', dirname(__DIR__));
+		}
 	}
 
 	/**
