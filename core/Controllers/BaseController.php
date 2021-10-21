@@ -2,6 +2,8 @@
 
 namespace Core\Controllers;
 
+use Symfony\Component\HttpFoundation\Response;
+
 abstract class BaseController
 {
 

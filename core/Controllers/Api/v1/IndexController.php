@@ -3,7 +3,6 @@
 namespace Core\Controllers\Api\v1;
 
 use Core\Controllers\Api\ApiController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,16 +27,6 @@ class IndexController extends ApiController
 	 */
 	public function index(): Response
 	{
-		return new JsonResponse('testing rwa');
+		return new Response(file_get_contents(ROOT_PATH . '/resources/templates/index.html'));
 	}
-
-	/**
-	 * @param int $id
-	 * @return Response
-	 */
-	public function users(int $id): Response
-	{
-		return new JsonResponse('id ' . $id);
-	}
-
 }

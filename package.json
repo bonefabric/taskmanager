@@ -1,0 +1,28 @@
+{
+  "name": "taskmanager",
+  "version": "1.0.0",
+  "description": "Task management application",
+  "main": "resources/js/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bonefabric/taskmanager.git"
+  },
+  "author": "Insaf Buranuglov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bonefabric/taskmanager/issues"
+  },
+  "homepage": "https://github.com/bonefabric/taskmanager#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "babel-loader": "^8.2.3",
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1"
+  }
+}
