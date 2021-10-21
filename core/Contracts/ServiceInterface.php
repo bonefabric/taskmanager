@@ -5,4 +5,6 @@ namespace Core\Contracts;
 interface ServiceInterface
 {
 
+
+
 }
