@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Core\Components\DIContainer;
+use Core\Components\DIContainer\DIContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

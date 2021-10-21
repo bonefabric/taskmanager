@@ -1,9 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Core\Components;
-
-use Core\Components\DIContainer\DIObject;
-use Core\Components\DIContainer\DIObjectInterface;
+namespace Core\Components\DIContainer;
 
 final class DIContainer
 {
