@@ -5,6 +5,8 @@ namespace Core;
 use Core\Components\DIContainer\DIContainer;
 use Core\Components\Router\RouteInterface;
 use Core\Components\Router\Router;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,6 +49,13 @@ final class Application
 		$this->container = new DIContainer();
 		$this->container->bindSingleton(Request::createFromGlobals());
 		$this->container->bindSingleton(new Router());
+		$this->container->bindSingleton(EntityManager::create([
+			'driver' => 'pdo_' . $_ENV['DRIVER'],
+			'dbname' => $_ENV['DB_NAME'],
+			'host' => $_ENV['DB_HOST'],
+			'user' => $_ENV['DB_USER'],
+			'password' => $_ENV['DB_PASSWORD']
+		], Setup::createAnnotationMetadataConfiguration([ROOT_PATH . '/core/Entity'], $_ENV['DEBUG'] === 'true', null, null, false)));
 
 		$routes = include ROOT_PATH . '/config/routes.php';
 		foreach ($routes as $route) {

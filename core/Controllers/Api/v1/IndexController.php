@@ -4,6 +4,8 @@ namespace Core\Controllers\Api\v1;
 
 use Core\Components\Helpers\Template;
 use Core\Controllers\Api\ApiController;
+use Core\Entity\Task;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,12 +17,16 @@ class IndexController extends ApiController
 	 */
 	protected Request $request;
 
+	protected EntityManager $entityManager;
+
 	/**
 	 * @param Request $request
+	 * @param EntityManager $entityManager
 	 */
-	public function __construct(Request $request)
+	public function __construct(Request $request, EntityManager $entityManager)
 	{
 		$this->request = $request;
+		$this->entityManager = $entityManager;
 	}
 
 	/**
@@ -28,6 +34,8 @@ class IndexController extends ApiController
 	 */
 	public function index(): Response
 	{
+		dump($this->entityManager->getRepository(Task::class)->findAll());
+
 		return new Response(Template::getTemplate('index'));
 	}
 }
