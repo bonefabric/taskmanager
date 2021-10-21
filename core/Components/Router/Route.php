@@ -41,6 +41,10 @@ class Route implements RouteInterface
 		$this->options = $options;
 	}
 
+	/**
+	 * @param Request $request
+	 * @return bool
+	 */
 	public function check(Request $request): bool
 	{
 		return true;

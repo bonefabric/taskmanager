@@ -13,7 +13,7 @@ class IndexController extends ApiController
 	 */
 	public function index(): Response
 	{
-		return new Response('test');
+		return new Response('testing rwa');
 	}
 
 }

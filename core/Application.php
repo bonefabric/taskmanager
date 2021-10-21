@@ -51,7 +51,8 @@ final class Application
 	public function start(): void
 	{
 		$route = $this->container->get(Router::class);
-//		$route->handle($this->container->get(Request::class));
+		$controller = $route->handle($this->container->get(Request::class));
+		dump($controller);
 	}
 
 	public function finish(): void
