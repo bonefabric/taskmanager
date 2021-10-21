@@ -33,6 +33,11 @@ class Route implements RouteInterface
 	protected array $options;
 
 	/**
+	 * @var array
+	 */
+	protected array $params = [];
+
+	/**
 	 * @param string $path
 	 * @param string $controller
 	 * @param array $methods
@@ -40,7 +45,7 @@ class Route implements RouteInterface
 	 */
 	public function __construct(string $path, string $controller, string $controllerMethod, array $methods, array $options = [])
 	{
-		$this->path = $path;
+		$this->path = trim($path, '/');
 		$this->controller = $controller;
 		$this->controllerMethod = $controllerMethod;
 		$this->methods = $methods;
@@ -53,7 +58,49 @@ class Route implements RouteInterface
 	 */
 	public function check(Request $request): bool
 	{
-		return $this->compare($request);
+		return $this->checkOptions(trim($request->server->get('REQUEST_URI'), '/')) || $this->compare($request);
+	}
+
+	/**
+	 * @param string $uri
+	 * @return bool
+	 */
+	protected function checkOptions(string $uri): bool
+	{
+		if (empty($this->options['patterns'])) {
+			return false;
+		}
+
+		$uriParts = explode('/', $uri);
+		$pathParts = explode('/', $this->path);
+
+		$count = count($uriParts);
+
+		if ($count !== count($pathParts)) {
+			return false;
+		}
+
+		for ($i = 0; $i < $count; $i++) {
+			$uriPart = $uriParts[$i];
+			$pathPart = $pathParts[$i];
+
+			if ($uriPart === $pathPart) {
+				continue;
+			}
+
+			$key = trim($pathPart, '{}');
+			if (empty($this->options['patterns'][$key])) {
+				continue;
+			}
+
+			if (preg_match('~^' . $this->options['patterns'][$key] . '$~', $uriPart)) {
+				$this->params[$key] = $uriPart;
+				continue;
+			}
+			return false;
+		}
+		$this->path = $uri;
+		return true;
 	}
 
 	/**
@@ -63,7 +110,7 @@ class Route implements RouteInterface
 	protected function compare(Request $request): bool
 	{
 		//TODO regex
-		return trim($request->server->get('REQUEST_URI'), '/') === trim($this->path, '/')
+		return trim($request->server->get('REQUEST_URI'), '/') === $this->path
 			&& in_array(strtoupper($request->server->get('REQUEST_METHOD')), $this->methods, true);
 	}
 
