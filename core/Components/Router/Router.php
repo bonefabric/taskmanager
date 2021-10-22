@@ -91,12 +91,25 @@ final class Router
 	}
 
 	/**
+	 * @param string $resource
 	 * @param string $controller
 	 * @param array $options
 	 */
-	public function resource(string $controller, array $options = []): void
+	public function resource(string $resource, string $controller, array $options = []): void
 	{
-		//TODO resource
+		$this->get('/' . $resource, $controller, 'index');
+		$this->post('/' . $resource, $controller, 'create');
+		$this->patch('/' . $resource . '/{id}', $controller, 'edit', [
+			'patterns' => [
+				'id' => '\d+'
+			]
+		]);
+		$this->delete('/' . $resource . '/{id}', $controller, 'delete', [
+			'patterns' => [
+				'id' => '\d+'
+			]
+		]);
+
 	}
 
 	/**
