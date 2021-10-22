@@ -4,6 +4,7 @@ namespace Core\Components\Router;
 
 use Symfony\Component\HttpFoundation\Request;
 
+//TODO добавить возможность кэширования маршрутов
 final class Router
 {
 

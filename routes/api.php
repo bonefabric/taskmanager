@@ -11,7 +11,6 @@ Router::component()->group(['prefix' => 'api'], function () {
 	});
 });
 
-dump(Router::component());
 //$router->get('/user/{id}/account/{name}', \Core\Controllers\Api\v1\IndexController::class, 'index', [
 //	'patterns' => [
 //		'id' => '\d+',
