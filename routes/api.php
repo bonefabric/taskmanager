@@ -2,10 +2,16 @@
 
 use Core\Facades\Router;
 
-$router = Router::component();
+Router::component()->group(['prefix' => 'api'], function () {
 
-//$router->get('/', \Core\Controllers\Api\v1\IndexController::class, 'index');
+	Router::component()->group(['prefix' => 'v1'], function () {
 
+		Router::component()->get('/test', \Core\Controllers\Api\v1\IndexController::class, 'index');
+
+	});
+});
+
+dump(Router::component());
 //$router->get('/user/{id}/account/{name}', \Core\Controllers\Api\v1\IndexController::class, 'index', [
 //	'patterns' => [
 //		'id' => '\d+',

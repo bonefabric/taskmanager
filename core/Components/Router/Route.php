@@ -162,4 +162,12 @@ class Route implements RouteInterface
 		return $this->params;
 	}
 
+	/**
+	 * @param string $prefix
+	 */
+	public function addPrefix(string $prefix): void
+	{
+		$this->path = trim($prefix, '/') . '/' . $this->path;
+	}
+
 }

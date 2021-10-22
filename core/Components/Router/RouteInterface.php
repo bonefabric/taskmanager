@@ -55,4 +55,9 @@ interface RouteInterface
 	 * @return array
 	 */
 	public function getParams(): array;
+
+	/**
+	 * @param string $prefix
+	 */
+	public function addPrefix(string $prefix): void;
 }

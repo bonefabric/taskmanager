@@ -18,6 +18,11 @@ final class Router
 	private RouteInterface $fallbackRoute;
 
 	/**
+	 * @var array
+	 */
+	private array $currentGroupOptions = [];
+
+	/**
 	 * @param Request $request
 	 * @return RouteInterface
 	 * @throws RouterException
@@ -43,7 +48,9 @@ final class Router
 	 */
 	public function get(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_GET], $options);
+		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_GET], $options);
+		$this->applyGroupOptions($route);
+		$this->routes[] = $route;
 	}
 
 	/**
@@ -54,7 +61,9 @@ final class Router
 	 */
 	public function post(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_POST], $options);
+		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_POST], $options);
+		$this->applyGroupOptions($route);
+		$this->routes[] = $route;
 	}
 
 	/**
@@ -65,7 +74,9 @@ final class Router
 	 */
 	public function put(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_PUT], $options);
+		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_PUT], $options);
+		$this->applyGroupOptions($route);
+		$this->routes[] = $route;
 	}
 
 	/**
@@ -76,7 +87,9 @@ final class Router
 	 */
 	public function patch(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_PATCH], $options);
+		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_PATCH], $options);
+		$this->applyGroupOptions($route);
+		$this->routes[] = $route;
 	}
 
 	/**
@@ -87,7 +100,9 @@ final class Router
 	 */
 	public function delete(string $path, string $controller, string $method = null, array $options = []): void
 	{
-		$this->routes[] = new Route($path, $controller, $method, [RouteInterface::METHOD_DELETE], $options);
+		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_DELETE], $options);
+		$this->applyGroupOptions($route);
+		$this->routes[] = $route;
 	}
 
 	/**
@@ -118,7 +133,9 @@ final class Router
 	 */
 	public function group(array $options, callable $group): void
 	{
-		//TODO group
+		$this->addGroupOptions($options);
+		$group();
+		$this->removeGroupOptions();
 	}
 
 	/**
@@ -129,6 +146,32 @@ final class Router
 	public function fallback(string $controller, string $method = null, array $options = []): void
 	{
 		$this->fallbackRoute = new Route('', $controller, $method, RouteInterface::METHODS_ALL, $options);
+	}
+
+	/**
+	 * @param array $options
+	 */
+	private function addGroupOptions(array $options): void
+	{
+		$this->currentGroupOptions[] = $options;
+	}
+
+	private function removeGroupOptions(): void
+	{
+		array_shift($this->currentGroupOptions);
+	}
+
+	/**
+	 * @param RouteInterface $route
+	 */
+	private function applyGroupOptions(RouteInterface $route): void
+	{
+		$options = array_reverse($this->currentGroupOptions);
+		foreach ($options as $option) {
+			if (isset($option['prefix'])) {
+				$route->addPrefix($option['prefix']);
+			}
+		}
 	}
 
 }

@@ -66,4 +66,9 @@ $router->get('/user/{id}/account/{name}', \Core\Controllers\Api\v1\IndexControll
 ```
 - _patterns_ - паттерны для проверки параметров
 
+#### Параметры группы маршрутов:
+```php
+$router->group(['prefix' => 'api'], function() {});
+```
+
 Параметы передаются в вызываемый метод контроллера.
