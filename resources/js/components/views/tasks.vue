@@ -1,10 +1,24 @@
 <template>
-<h1>Tasks</h1>
+	<div>
+		<p v-for="task in tasks">
+			{{ task }}
+		</p>
+	</div>
 </template>
 
 <script>
 export default {
-  name: "tasks"
+	name: "tasks",
+	data: () => {
+		return {
+			tasks: []
+		}
+	},
+	mounted() {
+		axios.get('api/v1/tasks').then(data => {
+			this.tasks = data.data
+		})
+	}
 }
 </script>
 

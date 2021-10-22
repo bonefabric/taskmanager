@@ -5,3 +5,4 @@ use Core\Facades\Router;
 $router = Router::component();
 
 $router->get('/', \Core\Controllers\Api\v1\IndexController::class, 'index');
+$router->fallback(\Core\Controllers\Api\v1\IndexController::class, 'index');
