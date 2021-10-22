@@ -25,10 +25,9 @@ final class Router
 
 	/**
 	 * @param Request $request
-	 * @return RouteInterface
-	 * @throws RouterException
+	 * @return RouteInterface|null
 	 */
-	public function handle(Request $request): RouteInterface
+	public function handle(Request $request): ?RouteInterface
 	{
 		foreach ($this->routes as $route) {
 			if ($route->check($request)) {
@@ -36,7 +35,7 @@ final class Router
 			}
 		}
 		if (!isset($this->fallbackRoute)) {
-			throw new RouterException('Route not found.');
+			return null;
 		}
 		return $this->fallbackRoute;
 	}

@@ -4,9 +4,11 @@ namespace Core;
 
 use Core\Components\Defender\Defender;
 use Core\Components\DIContainer\DIContainer;
+use Core\Components\Helpers\Template;
 use Core\Components\Router\RouteInterface;
 use Core\Components\Router\Router;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +49,9 @@ final class Application
 		return self::$instance;
 	}
 
+	/**
+	 * @throws ORMException
+	 */
 	public function init(): void
 	{
 		require_once ROOT_PATH . '/bootstrap/bootstrap.php';
@@ -75,11 +80,15 @@ final class Application
 	{
 		/** @var RouteInterface $route */
 		$route = $this->container->get(Router::class)->handle($this->container->get(Request::class));
+		if (is_null($route)) {
+			$this->response = new Response(Template::getTemplate('errors.404'), 404);
+			return;
+		}
 
 		/** @var Defender $defender */
 		$defender = $this->container->get(Defender::class);
 		if (!$defender->checkRoute($route)) {
-			$this->response = new Response(null, 401);
+			$this->response = new Response(Template::getTemplate('errors.401'), 401);
 			return;
 		}
 
