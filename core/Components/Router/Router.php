@@ -113,6 +113,11 @@ final class Router
 	public function resource(string $resource, string $controller, array $options = []): void
 	{
 		$this->get('/' . $resource, $controller, 'index');
+		$this->get('/' . $resource . '/{id}', $controller, 'show', [
+			'patterns' => [
+				'id' => '\d+'
+			]
+		]);
 		$this->post('/' . $resource, $controller, 'create');
 		$this->patch('/' . $resource . '/{id}', $controller, 'edit', [
 			'patterns' => [

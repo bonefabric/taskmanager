@@ -6,7 +6,7 @@ Router::component()->group(['prefix' => 'api'], function () {
 
 	Router::component()->group(['prefix' => 'v1'], function () {
 
-		Router::component()->get('/test', \Core\Controllers\Api\v1\IndexController::class, 'index');
+		Router::component()->resource('tasks', \Core\Controllers\Api\v1\TasksController::class);
 
 	});
 });

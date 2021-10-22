@@ -7,12 +7,13 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use JsonSerializable;
 
 /**
  * @Entity
  * @Table(name="tasks")
  */
-class Task
+class Task implements JsonSerializable
 {
 
 	/**
@@ -64,4 +65,15 @@ class Task
 		$this->description = $description;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		return [
+			'id' => $this->id,
+			'title' => $this->title,
+			'description' => $this->description,
+		];
+	}
 }

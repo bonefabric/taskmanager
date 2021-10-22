@@ -42,6 +42,7 @@ $router->resource('resourceName', \Core\Controllers\Api\v1\IndexController::clas
 * Ресурс создает автоматически маршруты
 */
 $router->get('/resourceName', \Core\Controllers\Api\v1\IndexController::class, 'index');
+$router->get('/resourceName/{id}', \Core\Controllers\Api\v1\IndexController::class, 'show');
 $router->post('/resourceName', \Core\Controllers\Api\v1\IndexController::class, 'create');
 $router->patch('/resourceName/{id}', \Core\Controllers\Api\v1\IndexController::class, 'edit');
 $router->delete('/resourceName/{id}', \Core\Controllers\Api\v1\IndexController::class, 'delete');

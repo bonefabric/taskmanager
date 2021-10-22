@@ -13,6 +13,7 @@ use Doctrine\ORM\Tools\Setup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+//TODO кэширование конфигураций
 final class Application
 {
 
