@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  php:
+    build: './deploy/php'
+
+  webserver:
+    build: './deploy/webserver'
+
+  database:
+    build: './deploy/database'
+
+  rabbitmq:
+    build: './deploy/rabbitmq'
+
+  redis:
+    build: './deploy/redis'
