@@ -1,3 +1,4 @@
+import 'tailwindcss/tailwind.css';
 import '../scss/app.scss';
 
 window.axios = require('axios');

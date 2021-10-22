@@ -1,11 +1,14 @@
 module.exports = {
-    purge: ['./resources/**/*.{vue,js,ts,jsx,tsx}'],
-    darkMode: false, // or 'media' or 'class'
-    theme: {
-        extend: {},
-    },
-    variants: {
-        extend: {},
-    },
-    plugins: [],
+	purge: {
+		enabled: true,
+		content: ["./resources/**/*.js", "./resources/**/*.vue"],
+	},
+	darkMode: false, // or 'media' or 'class'
+	theme: {
+		extend: {},
+	},
+	variants: {
+		extend: {},
+	},
+	plugins: [],
 }
