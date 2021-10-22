@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Components\Defender\Defender;
 use Core\Components\DIContainer\DIContainer;
 use Core\Components\Router\RouteInterface;
 use Core\Components\Router\Router;
@@ -52,6 +53,7 @@ final class Application
 		$this->container = new DIContainer();
 		$this->container->bindSingleton(Request::createFromGlobals());
 		$this->container->bindSingleton(new Router());
+		$this->container->bindSingleton(new Defender());
 		$this->container->bindSingleton(EntityManager::create([
 			'driver' => 'pdo_' . $_ENV['DRIVER'],
 			'dbname' => $_ENV['DB_NAME'],
@@ -73,6 +75,14 @@ final class Application
 	{
 		/** @var RouteInterface $route */
 		$route = $this->container->get(Router::class)->handle($this->container->get(Request::class));
+
+		/** @var Defender $defender */
+		$defender = $this->container->get(Defender::class);
+		if (!$defender->checkRoute($route)) {
+			$this->response = new Response(null, 401);
+			return;
+		}
+
 		$controllerClass = $route->getController();
 		$constructor = (new \ReflectionClass($controllerClass))->getConstructor();
 		$options = [];

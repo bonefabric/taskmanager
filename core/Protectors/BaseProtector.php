@@ -2,7 +2,9 @@
 
 namespace Core\Protectors;
 
-abstract class BaseProtector
+use Core\Contracts\ProtectorInterface;
+
+abstract class BaseProtector implements ProtectorInterface
 {
 
 }
