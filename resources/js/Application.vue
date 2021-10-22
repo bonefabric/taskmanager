@@ -1,5 +1,5 @@
 <template>
-	<div id="application">
+	<div id="application" class="bg-red-400">
 		<topMenu></topMenu>
 		<router-view></router-view>
 	</div>
@@ -17,8 +17,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 #application {
 	min-width: 100vw;
 	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
+
 </style>
