@@ -1,5 +1,5 @@
 <template>
-	<div id="application" class="bg-red-400">
+	<div id="application" class="bg-blue-50">
 		<topMenu></topMenu>
 		<router-view></router-view>
 	</div>
