@@ -69,7 +69,13 @@ $router->get('/user/{id}/account/{name}', \Core\Controllers\Api\v1\IndexControll
 
 #### Параметры группы маршрутов:
 ```php
-$router->group(['prefix' => 'api'], function() {});
+// Префикс маршрутов
+$router->group(['prefix' => 'api'], function() {
+    
+    //Маршрут GET api/path
+    $router->get('/path', \Core\Controllers\Api\v1\IndexController::class, 'index');
+    
+});
 ```
 
-Параметы передаются в вызываемый метод контроллера.
+Параметы передаются в вызываемый метод контроллера в порядке следования в маршруте.
