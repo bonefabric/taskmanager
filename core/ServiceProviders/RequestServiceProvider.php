@@ -2,9 +2,10 @@
 
 namespace Core\ServiceProviders;
 
+use Core\Components\ServiceContainer\ServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
-final class RequestServiceProvider extends BaseServiceProvider
+final class RequestServiceProvider extends ServiceProvider
 {
 
 	public function up(): void

@@ -2,7 +2,9 @@
 
 namespace Core\Protectors;
 
-final class AuthProtector extends BaseProtector
+use Core\Common\DefenderService\Protector;
+
+final class AuthProtector extends Protector
 {
 
 	/**

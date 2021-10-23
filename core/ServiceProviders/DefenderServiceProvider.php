@@ -2,9 +2,10 @@
 
 namespace Core\ServiceProviders;
 
+use Core\Components\ServiceContainer\ServiceProvider;
 use Core\Services\DefenderService;
 
-final class DefenderServiceProvider extends BaseServiceProvider
+final class DefenderServiceProvider extends ServiceProvider
 {
 
 	public function up(): void

@@ -4,10 +4,11 @@ namespace Core\ServiceProviders;
 
 use Core\Application;
 use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
+use Core\Components\ServiceContainer\ServiceProvider;
 use Core\Services\CSRFService;
 use Symfony\Component\HttpFoundation\Response;
 
-class CSRFServiceProvider extends BaseServiceProvider
+final class CSRFServiceProvider extends ServiceProvider
 {
 
 	public function up(): void

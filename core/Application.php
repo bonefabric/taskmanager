@@ -2,8 +2,11 @@
 
 namespace Core;
 
+use Core\Common\RouterService\Exceptions\RoutesAlreadyLoadedException;
 use Core\Common\RouterService\RouteInterface;
 use Core\Components\Helpers\Template;
+use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
+use Core\Components\ServiceContainer\Exceptions\ServicesAlreadyLoadedException;
 use Core\Components\ServiceContainer\ServiceContainer;
 use Core\Services\DefenderService;
 use Core\Services\DIService;
@@ -58,7 +61,7 @@ final class Application
 	}
 
 	/**
-	 * @throws Components\ServiceContainer\Exceptions\ServicesAlreadyLoadedException
+	 * @throws ServicesAlreadyLoadedException
 	 */
 	public function init(): void
 	{
@@ -69,8 +72,8 @@ final class Application
 	}
 
 	/**
-	 * @throws Common\RouterService\Exceptions\RoutesAlreadyLoadedException
-	 * @throws Components\ServiceContainer\Exceptions\ServiceIsNotExistsException
+	 * @throws RoutesAlreadyLoadedException
+	 * @throws ServiceIsNotExistsException
 	 * @throws ReflectionException
 	 */
 	public function start(): void

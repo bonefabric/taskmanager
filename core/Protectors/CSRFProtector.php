@@ -2,7 +2,9 @@
 
 namespace Core\Protectors;
 
-final class CSRFProtector extends BaseProtector
+use Core\Common\DefenderService\Protector;
+
+final class CSRFProtector extends Protector
 {
 
 	/**

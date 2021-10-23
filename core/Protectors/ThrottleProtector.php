@@ -2,7 +2,9 @@
 
 namespace Core\Protectors;
 
-final class ThrottleProtector extends BaseProtector
+use Core\Common\DefenderService\Protector;
+
+final class ThrottleProtector extends Protector
 {
 
 	/**

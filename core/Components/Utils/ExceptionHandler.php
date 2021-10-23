@@ -5,7 +5,7 @@ namespace Core\Components\Utils;
 use Core\Components\Helpers\Template;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExceptionHandler
+final class ExceptionHandler
 {
 
 	public static function init(): void

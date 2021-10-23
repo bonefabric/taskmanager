@@ -2,9 +2,10 @@
 
 namespace Core\ServiceProviders;
 
+use Core\Components\ServiceContainer\ServiceProvider;
 use Core\Services\RouterService;
 
-final class RouterServiceProvider extends BaseServiceProvider
+final class RouterServiceProvider extends ServiceProvider
 {
 
 	public function up(): void

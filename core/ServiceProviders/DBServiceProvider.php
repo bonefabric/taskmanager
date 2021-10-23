@@ -2,11 +2,12 @@
 
 namespace Core\ServiceProviders;
 
+use Core\Components\ServiceContainer\ServiceProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 
-class DBServiceProvider extends BaseServiceProvider
+final class DBServiceProvider extends ServiceProvider
 {
 
 	/**

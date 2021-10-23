@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Core\ServiceProviders;
+namespace Core\Components\ServiceContainer;
 
 use Core\Components\ServiceContainer\Contracts\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class BaseServiceProvider implements ServiceProviderInterface
+abstract class ServiceProvider implements ServiceProviderInterface
 {
 
 	/**

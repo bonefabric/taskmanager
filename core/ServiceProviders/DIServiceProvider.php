@@ -2,9 +2,10 @@
 
 namespace Core\ServiceProviders;
 
+use Core\Components\ServiceContainer\ServiceProvider;
 use Core\Services\DIService;
 
-final class DIServiceProvider extends BaseServiceProvider
+final class DIServiceProvider extends ServiceProvider
 {
 
 	public function up(): void
