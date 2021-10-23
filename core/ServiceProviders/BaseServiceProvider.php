@@ -3,6 +3,7 @@
 namespace Core\ServiceProviders;
 
 use Core\Components\ServiceContainer\Contracts\ServiceProviderInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseServiceProvider implements ServiceProviderInterface
 {
@@ -47,8 +48,12 @@ abstract class BaseServiceProvider implements ServiceProviderInterface
 		return new $class();
 	}
 
-	public function down(): void
+	/**
+	 * @param Response $response
+	 */
+	public function down(Response $response): void
 	{
 
 	}
+
 }

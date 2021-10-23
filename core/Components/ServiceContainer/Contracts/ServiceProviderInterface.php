@@ -2,12 +2,17 @@
 
 namespace Core\Components\ServiceContainer\Contracts;
 
+use Symfony\Component\HttpFoundation\Response;
+
 interface ServiceProviderInterface
 {
 
 	public function up(): void;
 
-	public function down(): void;
+	/**
+	 * @param Response $response
+	 */
+	public function down(Response $response): void;
 
 	/**
 	 * @return bool

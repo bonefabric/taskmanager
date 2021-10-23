@@ -111,7 +111,7 @@ final class Application
 
 	public function finish(): void
 	{
-		$this->serviceContainer->downProviders();
+		$this->serviceContainer->downProviders($this->response);
 		$this->response->send();
 	}
 

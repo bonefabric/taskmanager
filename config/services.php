@@ -9,4 +9,5 @@ return [
 	\Core\ServiceProviders\DIServiceProvider::class,
 	\Core\ServiceProviders\DefenderServiceProvider::class,
 	\Core\ServiceProviders\DBServiceProvider::class,
+	\Core\ServiceProviders\CSRFServiceProvider::class,
 ];

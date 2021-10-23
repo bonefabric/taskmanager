@@ -5,6 +5,7 @@ namespace Core\Components\ServiceContainer;
 use Core\Components\ServiceContainer\Contracts\ServiceProviderInterface;
 use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
 use Core\Components\ServiceContainer\Exceptions\ServicesAlreadyLoadedException;
+use Symfony\Component\HttpFoundation\Response;
 
 final class ServiceContainer
 {
@@ -91,10 +92,13 @@ final class ServiceContainer
 		$this->bind($provider);
 	}
 
-	public function downProviders(): void
+	/**
+	 * @param Response $response
+	 */
+	public function downProviders(Response $response): void
 	{
 		foreach ($this->providers as $provider) {
-			$provider->down();
+			$provider->down($response);
 		}
 	}
 
