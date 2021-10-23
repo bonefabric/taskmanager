@@ -2,10 +2,16 @@
 
 namespace Core\Common\RouterService;
 
+use Core\Common\DefenderService\ProtectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Route implements RouteInterface
 {
+
+	/**
+	 * @var string[]
+	 */
+	protected array $protectors = [];
 
 	/**
 	 * Regex for comparing with URI
@@ -178,4 +184,29 @@ class Route implements RouteInterface
 		$this->path = trim($prefix, '/') . '/' . $this->path;
 	}
 
+	/**
+	 * @return ProtectorInterface[]
+	 */
+	public function getProtectors(): array
+	{
+		return $this->protectors;
+	}
+
+	/**
+	 * @param string $protector
+	 */
+	public function addProtector(string $protector): void
+	{
+		$this->protectors[] = $protector;
+	}
+
+	/**
+	 * @param array $protectors
+	 */
+	public function addProtectors(array $protectors): void
+	{
+		foreach ($protectors as $protector) {
+			$this->addProtector($protector);
+		}
+	}
 }

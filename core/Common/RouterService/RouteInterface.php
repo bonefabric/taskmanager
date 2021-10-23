@@ -60,4 +60,14 @@ interface RouteInterface
 	 * @param string $prefix
 	 */
 	public function addPrefix(string $prefix): void;
+
+	/**
+	 * @param string $protector
+	 */
+	public function addProtector(string $protector): void;
+
+	/**
+	 * @param array $protectors
+	 */
+	public function addProtectors(array $protectors): void;
 }

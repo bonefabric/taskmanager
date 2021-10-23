@@ -155,7 +155,6 @@ final class RouterService
 				'id' => '\d+'
 			]
 		]);
-
 	}
 
 	/**
@@ -201,6 +200,9 @@ final class RouterService
 		foreach ($options as $option) {
 			if (isset($option['prefix'])) {
 				$route->addPrefix($option['prefix']);
+			}
+			if (isset($option['protectors'])) {
+				$route->addProtectors($option['protectors']);
 			}
 		}
 	}
