@@ -5,6 +5,7 @@ namespace Core;
 use Core\Common\RouterService\RouteInterface;
 use Core\Components\Helpers\Template;
 use Core\Components\ServiceContainer\ServiceContainer;
+use Core\Services\DefenderService;
 use Core\Services\DIService;
 use Core\Services\RouterService;
 use ReflectionException;
@@ -85,6 +86,14 @@ final class Application
 
 		if (is_null($route)) {
 			$this->response = new Response(Template::getTemplate('errors.404'), 404);
+			return;
+		}
+
+		/** @var DefenderService $defender */
+		$defender = $this->getServiceContainer()->getService(DefenderService::class);
+
+		if (!$defender->accessed()) {
+			$this->response = new Response(Template::getTemplate('errors.403'), 403);
 			return;
 		}
 

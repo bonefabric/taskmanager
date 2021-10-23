@@ -13,4 +13,12 @@ final class DefenderService
 	private array $protectors;
 
 
+	/**
+	 * @return bool
+	 */
+	public function accessed(): bool
+	{
+		return true;
+	}
+
 }
