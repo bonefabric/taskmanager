@@ -10,4 +10,5 @@ return [
 	\Core\ServiceProviders\DefenderServiceProvider::class,
 	\Core\ServiceProviders\DBServiceProvider::class,
 	\Core\ServiceProviders\CSRFServiceProvider::class,
+	\Core\ServiceProviders\EventsServiceProvider::class,
 ];
