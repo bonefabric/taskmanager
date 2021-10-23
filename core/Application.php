@@ -7,6 +7,7 @@ use Core\Components\Helpers\Template;
 use Core\Components\ServiceContainer\ServiceContainer;
 use Core\Services\DIService;
 use Core\Services\RouterService;
+use ReflectionException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -69,7 +70,7 @@ final class Application
 	/**
 	 * @throws Common\RouterService\Exceptions\RoutesAlreadyLoadedException
 	 * @throws Components\ServiceContainer\Exceptions\ServiceIsNotExistsException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function start(): void
 	{

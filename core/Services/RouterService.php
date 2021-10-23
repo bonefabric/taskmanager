@@ -7,14 +7,11 @@ use Core\Common\RouterService\Route;
 use Core\Common\RouterService\RouteInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-
+/**
+ * TODO кэширование маршрутов
+ */
 final class RouterService
 {
-
-	/**
-	 * @var array
-	 */
-	private array $routeLists;
 
 	/**
 	 * @var bool
@@ -42,8 +39,8 @@ final class RouterService
 	private function loadRoutes(): void
 	{
 		if (!$this->isRoutesLoaded) {
-			$this->routeLists = include ROOT_PATH . '/config/routes.php';
-			foreach ($this->routeLists as $route) {
+			$routeLists = include ROOT_PATH . '/config/routes.php';
+			foreach ($routeLists as $route) {
 				require_once $route;
 			}
 		} else {
@@ -67,10 +64,7 @@ final class RouterService
 				return $route;
 			}
 		}
-		if (!isset($this->fallbackRoute)) {
-			return null;
-		}
-		return $this->fallbackRoute;
+		return $this->fallbackRoute ?? null;
 	}
 
 	/**
@@ -141,9 +135,8 @@ final class RouterService
 	/**
 	 * @param string $resource
 	 * @param string $controller
-	 * @param array $options
 	 */
-	public function resource(string $resource, string $controller, array $options = []): void
+	public function resource(string $resource, string $controller): void
 	{
 		$this->get('/' . $resource, $controller, 'index');
 		$this->get('/' . $resource . '/{id}', $controller, 'show', [
