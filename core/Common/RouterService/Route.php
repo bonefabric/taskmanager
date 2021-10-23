@@ -8,38 +8,46 @@ class Route implements RouteInterface
 {
 
 	/**
+	 * Regex for comparing with URI
 	 * @var string
 	 */
 	protected string $path;
 
 	/**
+	 * Route handler class
 	 * @var string
 	 */
 	protected string $controller;
 
 	/**
-	 * @var array
+	 * Supported methods
+	 * @var string[]
 	 */
 	protected array $methods;
 
 	/**
+	 * Router handler controller method
 	 * @var string
 	 */
 	protected string $controllerMethod;
 
 	/**
+	 * Route options(patterns and other)
 	 * @var array
 	 */
 	protected array $options;
 
 	/**
+	 * Dynamic params
 	 * @var array
 	 */
 	protected array $params = [];
 
+
 	/**
 	 * @param string $path
 	 * @param string $controller
+	 * @param string $controllerMethod
 	 * @param array $methods
 	 * @param array $options
 	 */
