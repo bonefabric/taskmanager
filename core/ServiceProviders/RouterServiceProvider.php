@@ -9,11 +9,7 @@ final class RouterServiceProvider extends BaseServiceProvider
 
 	public function up(): void
 	{
-		$this->register(new RouterService(), false);
+		$this->register(new RouterService(), true);
 	}
 
-	public function down(): void
-	{
-
-	}
 }

@@ -12,8 +12,4 @@ final class DefenderServiceProvider extends BaseServiceProvider
 		$this->register(new DefenderService(), true);
 	}
 
-	public function down(): void
-	{
-
-	}
 }

@@ -12,12 +12,12 @@ final class ServiceContainer
 	/**
 	 * @var object[]
 	 */
-	private array $services;
+	private array $services = [];
 
 	/**
 	 * @var ServiceProviderInterface[]
 	 */
-	private array $providers;
+	private array $providers = [];
 
 	/**
 	 * @var bool

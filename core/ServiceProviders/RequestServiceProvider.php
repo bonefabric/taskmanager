@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Core\ServiceProviders;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestServiceProvider extends BaseServiceProvider
+final class RequestServiceProvider extends BaseServiceProvider
 {
 
 	public function up(): void
@@ -12,8 +12,4 @@ class RequestServiceProvider extends BaseServiceProvider
 		$this->register(Request::createFromGlobals(), true);
 	}
 
-	public function down(): void
-	{
-
-	}
 }

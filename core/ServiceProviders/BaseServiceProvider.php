@@ -46,4 +46,9 @@ abstract class BaseServiceProvider implements ServiceProviderInterface
 		$class = get_class($this->service);
 		return new $class();
 	}
+
+	public function down(): void
+	{
+
+	}
 }

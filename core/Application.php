@@ -4,6 +4,7 @@ namespace Core;
 
 use Core\Components\ServiceContainer\ServiceContainer;
 use Core\Services\DIService;
+use Core\Services\RouterService;
 use Symfony\Component\HttpFoundation\Response;
 
 //TODO кэширование конфигураций
@@ -14,11 +15,6 @@ final class Application
 	 * @var Application
 	 */
 	private static Application $instance;
-
-//	/**
-//	 * @var DIContainer
-//	 */
-//	private DIContainer $container;
 
 	/**
 	 * @var Response
@@ -49,6 +45,14 @@ final class Application
 	}
 
 	/**
+	 * @return ServiceContainer
+	 */
+	public function getServiceContainer(): ServiceContainer
+	{
+		return $this->serviceContainer;
+	}
+
+	/**
 	 * @throws Components\ServiceContainer\Exceptions\ServicesAlreadyLoadedException
 	 */
 	public function init(): void
@@ -57,27 +61,15 @@ final class Application
 
 		$this->serviceContainer = new Components\ServiceContainer\ServiceContainer();
 		$this->serviceContainer->loadServices();
-
-		/** @var DIService $DI */
-		$DI = $this->serviceContainer->getService(DIService::class);
-
-//		$this->container->bindSingleton(new Defender());
-//		$this->container->bindSingleton(EntityManager::create([
-//			'driver' => 'pdo_' . $_ENV['DRIVER'],
-//			'dbname' => $_ENV['DB_NAME'],
-//			'host' => $_ENV['DB_HOST'],
-//			'user' => $_ENV['DB_USER'],
-//			'password' => $_ENV['DB_PASSWORD']
-//		], Setup::createAnnotationMetadataConfiguration([ROOT_PATH . '/core/Entity'], $_ENV['DEBUG'] === 'true', null, null, false)));
-//
-//		$routes = include ROOT_PATH . '/config/routes.php';
-//		foreach ($routes as $route) {
-//			require_once $route;
-//		}
 	}
 
 	public function start(): void
 	{
+		/** @var RouterService $router */
+		$router = $this->serviceContainer->getService(RouterService::class);
+		$router->loadRoutes();
+
+
 //		/** @var RouteInterface $route */
 //		$route = $this->container->get(Router::class)->handle($this->container->get(Request::class));
 //		if (is_null($route)) {
@@ -106,7 +98,6 @@ final class Application
 
 	public function finish(): void
 	{
-		dump($this->serviceContainer);
 		$this->serviceContainer->downProviders();
 //		$this->response->send();
 	}
