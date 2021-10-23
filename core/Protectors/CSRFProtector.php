@@ -2,7 +2,7 @@
 
 namespace Core\Protectors;
 
-final class AuthProtector extends BaseProtector
+final class CSRFProtector extends BaseProtector
 {
 
 	/**

@@ -107,14 +107,6 @@ final class Application
 
 		$controller = new $controllerClass(...$options);
 		$this->response = $controller->{$route->getControllerMethod()}(...array_values($route->getParams()));
-
-		// TODO protect routes
-//		/** @var Defender $defender */
-//		$defender = $this->container->get(Defender::class);
-//		if (!$defender->checkRoute($route)) {
-//			$this->response = new Response(Template::getTemplate('errors.401'), 401);
-//			return;
-//		}
 	}
 
 	public function finish(): void
