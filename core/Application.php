@@ -2,9 +2,12 @@
 
 namespace Core;
 
+use Core\Common\RouterService\RouteInterface;
+use Core\Components\Helpers\Template;
 use Core\Components\ServiceContainer\ServiceContainer;
 use Core\Services\DIService;
 use Core\Services\RouterService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 //TODO кэширование конфигураций
@@ -59,47 +62,55 @@ final class Application
 	{
 		require_once ROOT_PATH . '/bootstrap/bootstrap.php';
 
-		$this->serviceContainer = new Components\ServiceContainer\ServiceContainer();
+		$this->serviceContainer = new ServiceContainer();
 		$this->serviceContainer->loadServices();
 	}
 
+	/**
+	 * @throws Common\RouterService\Exceptions\RoutesAlreadyLoadedException
+	 * @throws Components\ServiceContainer\Exceptions\ServiceIsNotExistsException
+	 * @throws \ReflectionException
+	 */
 	public function start(): void
 	{
 		/** @var RouterService $router */
 		$router = $this->serviceContainer->getService(RouterService::class);
-		$router->loadRoutes();
 
+		/** @var Request $request */
+		$request = $this->serviceContainer->getService(Request::class);
 
-//		/** @var RouteInterface $route */
-//		$route = $this->container->get(Router::class)->handle($this->container->get(Request::class));
-//		if (is_null($route)) {
-//			$this->response = new Response(Template::getTemplate('errors.404'), 404);
-//			return;
-//		}
-//
+		/** @var RouteInterface $route */
+		$route = $router->handle($request);
+
+		if (is_null($route)) {
+			$this->response = new Response(Template::getTemplate('errors.404'), 404);
+			return;
+		}
+
+		$controllerClass = $route->getController();
+
+		/** @var DIService $DIService */
+		$DIService = $this->serviceContainer->getService(DIService::class);
+		$constructorOptions = $DIService->getConstructorParams($controllerClass);
+
+		$options = $this->serviceContainer->getServicesArray($constructorOptions);
+
+		$controller = new $controllerClass(...$options);
+		$this->response = $controller->{$route->getControllerMethod()}(...array_values($route->getParams()));
+
+		// TODO protect routes
 //		/** @var Defender $defender */
 //		$defender = $this->container->get(Defender::class);
 //		if (!$defender->checkRoute($route)) {
 //			$this->response = new Response(Template::getTemplate('errors.401'), 401);
 //			return;
 //		}
-//
-//		$controllerClass = $route->getController();
-//		$constructor = (new \ReflectionClass($controllerClass))->getConstructor();
-//		$options = [];
-//		if (!is_null($constructor)) {
-//			foreach ($constructor->getParameters() as $parameter) {
-//				is_null($parameter->getType()) ?: $options[$parameter->getPosition()] = $this->container->get($parameter->getType()->getName());
-//			}
-//		}
-//		$controller = new $controllerClass(...$options);
-//		$this->response = $controller->{$route->getControllerMethod()}(...array_values($route->getParams()));
 	}
 
 	public function finish(): void
 	{
 		$this->serviceContainer->downProviders();
-//		$this->response->send();
+		$this->response->send();
 	}
 
 }

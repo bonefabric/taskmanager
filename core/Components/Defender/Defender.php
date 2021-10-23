@@ -2,7 +2,7 @@
 
 namespace Core\Components\Defender;
 
-use Core\Components\Router\RouteInterface;
+use Core\Common\RouterService\RouteInterface;
 
 final class Defender
 {

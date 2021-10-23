@@ -69,6 +69,20 @@ final class ServiceContainer
 	}
 
 	/**
+	 * @param string[] $services
+	 * @return object[]
+	 * @throws ServiceIsNotExistsException
+	 */
+	public function getServicesArray(array $services): array
+	{
+		$result = [];
+		foreach ($services as $service) {
+			$result[] = $this->getService($service);
+		}
+		return $result;
+	}
+
+	/**
 	 * @param ServiceProviderInterface $provider
 	 */
 	private function loadService(ServiceProviderInterface $provider): void

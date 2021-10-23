@@ -1,12 +1,17 @@
 <?php declare(strict_types=1);
 
-use Core\Facades\Router;
+/** @var RouterService $router */
 
-Router::component()->group(['prefix' => 'api'], function () {
+use Core\Application;
+use Core\Services\RouterService;
 
-	Router::component()->group(['prefix' => 'v1'], function () {
+$router = Application::getInstance()->getServiceContainer()->getService(\Core\Services\RouterService::class);
 
-		Router::component()->resource('tasks', \Core\Controllers\Api\v1\TasksController::class);
+$router->group(['prefix' => 'api'], function () use ($router) {
+
+	$router->group(['prefix' => 'v1'], function () use ($router) {
+
+		$router->resource('tasks', \Core\Controllers\Api\v1\TasksController::class);
 
 	});
 });
