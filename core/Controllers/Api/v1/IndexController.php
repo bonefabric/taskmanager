@@ -4,7 +4,6 @@ namespace Core\Controllers\Api\v1;
 
 use Core\Components\Helpers\Template;
 use Core\Controllers\Api\ApiController;
-use Core\Entity\Task;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

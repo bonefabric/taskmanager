@@ -14,9 +14,11 @@ class M2021_10_24_10_26_17_346831_create_roles_table extends Migrator
 		Capsule::schema()->create('roles', function ($table) {
 			/** @var Blueprint $table */
 			$table->id();
-			$table->string('name', 50);
+			$table->string('name', 50)->unique();
 			$table->timestamps();
 			$table->softDeletes();
+
+			$table->index('name');
 		});
 	}
 

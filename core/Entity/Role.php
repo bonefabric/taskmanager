@@ -2,6 +2,7 @@
 
 namespace Core\Entity;
 
+use Core\Common\Doctrine\SoftDeletes;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping\Table;
  */
 class Role
 {
+	use SoftDeletes;
 
 	/**
 	 * @Id
@@ -42,6 +44,12 @@ class Role
 	 * @Column(type="datetime", nullable=true)
 	 */
 	protected DateTime $deleted_at;
+
+	public function __construct()
+	{
+		$this->created_at = new DateTime();
+		$this->updated_at = new DateTime();
+	}
 
 	/**
 	 * @return string
