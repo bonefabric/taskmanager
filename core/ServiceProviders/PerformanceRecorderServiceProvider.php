@@ -2,8 +2,12 @@
 
 namespace Core\ServiceProviders;
 
+use Core\Application;
+use Core\Common\PerformanceRecorderService\PerformanceRecordingException;
+use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
 use Core\Components\ServiceContainer\ServiceProvider;
 use Core\Services\PerformanceRecorderService;
+use Symfony\Component\HttpFoundation\Response;
 
 class PerformanceRecorderServiceProvider extends ServiceProvider
 {
@@ -11,5 +15,21 @@ class PerformanceRecorderServiceProvider extends ServiceProvider
 	public function up(): void
 	{
 		$this->register(new PerformanceRecorderService(), true);
+	}
+
+	/**
+	 * @param Response $response
+	 * @throws PerformanceRecordingException
+	 * @throws ServiceIsNotExistsException
+	 */
+	public function down(Response $response): void
+	{
+		if ($_ENV['DEBUG']) {
+			/** @var PerformanceRecorderService $performanceService */
+			$performanceService = Application::getInstance()->getServiceContainer()->getService(PerformanceRecorderService::class);
+
+			$performance = $performanceService->getPerformance();
+			$response->headers->add(['performance' => $performance->s + $performance->f]);
+		}
 	}
 }

@@ -123,8 +123,8 @@ final class Application
 	 */
 	public function finish(): void
 	{
-		$this->serviceContainer->downProviders($this->response);
 		(new AfterFinishEvent())->dispatch();
+		$this->serviceContainer->downProviders($this->response);
 		$this->response->send();
 	}
 
