@@ -12,7 +12,7 @@ final class CSRFService
 	 */
 	public function addResponseToken(Response $response): void
 	{
-		$response->headers->add(['CSRFToken' => 'none']);
+		$response->headers->add(['X-CSRFToken' => 'none']);
 	}
 
 }

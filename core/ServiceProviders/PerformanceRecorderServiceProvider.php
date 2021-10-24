@@ -29,7 +29,7 @@ class PerformanceRecorderServiceProvider extends ServiceProvider
 			$performanceService = Application::getInstance()->getServiceContainer()->getService(PerformanceRecorderService::class);
 
 			$performance = $performanceService->getPerformance();
-			$response->headers->add(['performance' => $performance->s + $performance->f]);
+			$response->headers->add(['X-Performance' => $performance->s + $performance->f]);
 		}
 	}
 }
