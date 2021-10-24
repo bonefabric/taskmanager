@@ -7,6 +7,8 @@ use Core\Common\DefenderService\ProtectorException;
 use Core\Common\DefenderService\ProtectorInterface;
 use Core\Common\RouterService\RouteInterface;
 use Core\Components\ServiceContainer\Contracts\BootableService;
+use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
+use ReflectionException;
 
 final class DefenderService implements BootableService
 {
@@ -17,14 +19,11 @@ final class DefenderService implements BootableService
 	private array $protectorsConfig;
 
 	/**
-	 * @var ProtectorInterface[]
-	 */
-	private array $protectors = [];
-
-	/**
 	 * @param RouteInterface $route
 	 * @return bool
 	 * @throws ProtectorException
+	 * @throws ServiceIsNotExistsException
+	 * @throws ReflectionException
 	 */
 	public function accessed(RouteInterface $route): bool
 	{
@@ -34,7 +33,12 @@ final class DefenderService implements BootableService
 				throw new ProtectorException('Protector ' . $protectorIdentity . ' not found.');
 			}
 			$protectorClass = $this->protectorsConfig['protectors'][$protectorIdentity];
-			$protector = new $protectorClass();
+
+			/** @var DIService $DIService */
+			$DIService = Application::getInstance()->getServiceContainer()->getService(DIService::class);
+			$constructorParams = $DIService->getConstructorParams($protectorClass);
+			$params = Application::getInstance()->getServiceContainer()->getServicesArray($constructorParams);
+			$protector = new $protectorClass(...$params);
 			if (!$protector instanceof ProtectorInterface) {
 				throw new ProtectorException('Protector ' . $protectorClass . ' must implement Core\Common\DefenderService\ProtectorInterface.');
 			}

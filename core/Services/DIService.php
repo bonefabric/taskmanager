@@ -3,6 +3,7 @@
 namespace Core\Services;
 
 use ReflectionClass;
+use ReflectionException;
 
 final class DIService
 {
@@ -10,7 +11,7 @@ final class DIService
 	/**
 	 * @param string $class
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function getConstructorParams(string $class): array
 	{
