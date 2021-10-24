@@ -7,7 +7,9 @@
 	"vlucas/phpdotenv": "^5.3",
 	"symfony/http-foundation": "^5.3",
 	"doctrine/orm": "^2.10",
-	"symfony/cache": "^5.3"
+	"symfony/cache": "^5.3",
+	"symfony/console": "^5.3",
+    "illuminate/database": "^8.67"
   },
   "require-dev": {
 	"roave/security-advisories": "dev-latest",
@@ -17,7 +19,8 @@
   "license": "MIT",
   "autoload": {
 	"psr-4": {
-	  "Core\\": "core/"
+	  "Core\\": "core/",
+	  "Database\\": "database/"
 	}
   },
   "autoload-dev": {
