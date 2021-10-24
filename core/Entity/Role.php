@@ -108,9 +108,9 @@ class Role implements JsonSerializable
 		return [
 			'id' => $this->getId(),
 			'name' => $this->getName(),
-			'created_at' => $this->getCreatedAt(),
-			'updated_at' => $this->getUpdatedAt(),
-			'deleted_at' => $this->getDeletedAt(),
+			'created_at' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
+			'updated_at' => $this->getUpdatedAt()->format('Y-m-d H:i:s'),
+			'deleted_at' => $this->getDeletedAt() ? $this->getDeletedAt()->format('Y-m-d H:i:s') : null,
 		];
 	}
 }

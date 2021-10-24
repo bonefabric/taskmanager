@@ -1,7 +1,7 @@
 <template>
 	<div id="application" class="bg-blue-50">
 		<topMenu></topMenu>
-		<router-view></router-view>
+		<router-view class="mt-10 mb-10 mr-auto ml-auto container"></router-view>
 	</div>
 </template>
 
