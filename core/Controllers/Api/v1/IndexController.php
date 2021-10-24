@@ -36,18 +36,6 @@ class IndexController extends ApiController
 	 */
 	public function index(): Response
 	{
-
-		/** @var Role $role */
-		$role = $this->entityManager->find(Role::class, 2);
-
-		$user = new User();
-		$user->setName('Insaf');
-		$user->setEmail('iburanguloff@ya.ru');
-		$user->setPassword('testpassword');
-		$user->setRoleRef($role->getId());
-		$this->entityManager->persist($user);
-		$this->entityManager->flush();
-
 		return new Response(Template::getTemplate('index'));
 	}
 }
