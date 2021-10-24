@@ -9,12 +9,13 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use JsonSerializable;
 
 /**
  * @Entity(repositoryClass="Core\Repository\RoleRepository")
  * @Table(name="roles")
  */
-class Role
+class Role implements JsonSerializable
 {
 	use SoftDeletes;
 
@@ -92,11 +93,24 @@ class Role
 	}
 
 	/**
-	 * @return DateTimeImmutable
+	 * @return ?DateTimeImmutable
 	 */
-	public function getDeletedAt(): DateTimeImmutable
+	public function getDeletedAt(): ?DateTimeImmutable
 	{
-		return $this->deleted_at;
+		return $this->deleted_at ?? null;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		return [
+			'id' => $this->getId(),
+			'name' => $this->getName(),
+			'created_at' => $this->getCreatedAt(),
+			'updated_at' => $this->getUpdatedAt(),
+			'deleted_at' => $this->getDeletedAt(),
+		];
+	}
 }

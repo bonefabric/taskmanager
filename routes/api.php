@@ -11,7 +11,7 @@ $router->group(['prefix' => 'api', 'protectors' => ['auth', 'throttle']], functi
 
 	$router->group(['prefix' => 'v1'], function () use ($router) {
 
-		$router->resource('tasks', \Core\Controllers\Api\v1\TasksController::class);
+		$router->resource('roles', \Core\Controllers\Api\v1\RoleController::class);
 
 	});
 });

@@ -14,9 +14,9 @@ export default new VueRouter({
             component: index
         },
         {
-            path: "/tasks",
-            name: "tasks",
-            component: () => import("../components/views/tasks")
+            path: "/roles",
+            name: "roles",
+            component: () => import("../components/views/roles")
         }
     ]
 });

@@ -142,6 +142,7 @@ final class RouterService implements BootableService
 	 */
 	public function resource(string $resource, string $controller, array $options = []): void
 	{
+		//TODO сделать пагинацию
 		$this->get('/' . $resource, $controller, 'index');
 		$options = array_merge([
 			'patterns' => [
