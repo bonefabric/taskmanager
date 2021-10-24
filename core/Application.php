@@ -73,7 +73,6 @@ final class Application
 
 		$this->serviceContainer = new ServiceContainer();
 		$this->serviceContainer->loadServices();
-
 		(new AfterInitEvent())->dispatch();
 	}
 
@@ -101,7 +100,7 @@ final class Application
 		/** @var DefenderService $defender */
 		$defender = $this->getServiceContainer()->getService(DefenderService::class);
 
-		if (!$defender->accessed()) {
+		if (!$defender->accessed($route)) {
 			$this->response = new Response(Template::getTemplate('errors.403'), 403);
 			return;
 		}

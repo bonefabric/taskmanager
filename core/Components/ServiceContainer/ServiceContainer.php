@@ -2,7 +2,9 @@
 
 namespace Core\Components\ServiceContainer;
 
+use Core\Components\ServiceContainer\Contracts\BootableService;
 use Core\Components\ServiceContainer\Contracts\ServiceProviderInterface;
+use Core\Components\ServiceContainer\Contracts\StoppableService;
 use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
 use Core\Components\ServiceContainer\Exceptions\ServicesAlreadyLoadedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,16 +13,19 @@ final class ServiceContainer
 {
 
 	/**
+	 * Loaded services
 	 * @var object[]
 	 */
 	private array $services = [];
 
 	/**
+	 * Service providers
 	 * @var ServiceProviderInterface[]
 	 */
 	private array $providers = [];
 
 	/**
+	 * Flag - is services already loaded
 	 * @var bool
 	 */
 	private bool $servicesLoaded = false;
@@ -33,45 +38,56 @@ final class ServiceContainer
 		if ($this->servicesLoaded) {
 			throw new ServicesAlreadyLoadedException('Services already loaded.');
 		}
-		$serviceProvidersList = include ROOT_PATH . '/config/services.php';
-		foreach ($serviceProvidersList as $providerClass) {
-			/** @var ServiceProviderInterface $provider */
-			$provider = new $providerClass();
-			$this->loadService($provider);
-		}
+		$this->loadAndUpProviders();
+		$this->loadAndBootServices();
 		$this->servicesLoaded = true;
 	}
 
-	private function bind(ServiceProviderInterface $provider): void
+	private function loadAndUpProviders(): void
 	{
-		$serviceClass = get_class($provider->getService());
-		$this->providers[$serviceClass] = $provider;
+		$providersList = include ROOT_PATH . '/config/services.php';
+
+		foreach ($providersList as $providerClass) {
+			/** @var ServiceProviderInterface $provider */
+			$provider = new $providerClass();
+			$provider->up();
+			$this->providers[$provider->getIdentity()] = $provider;
+		}
+	}
+
+	private function loadAndBootServices(): void
+	{
+		foreach ($this->providers as $provider) {
+			if ($provider->isSingleton()) {
+				$service = $provider->getService();
+				$this->services[$provider->getIdentity()] = $service;
+				if ($service instanceof BootableService) {
+					$service->boot();
+				}
+			}
+		}
 	}
 
 	/**
-	 * @param string $service
+	 * @param string $identity
 	 * @return object
 	 * @throws ServiceIsNotExistsException
 	 */
-	public function getService(string $service): object
+	public function getService(string $identity): object
 	{
-		if (!$this->providers[$service]) {
-			throw new ServiceIsNotExistsException('Service is not exists ' . $service . '.');
+		if (!$this->providers[$identity]) {
+			throw new ServiceIsNotExistsException('Service is not exists ' . $identity . '.');
 		}
-		$provider = $this->providers[$service];
+		$provider = $this->providers[$identity];
 		if (!$provider->isSingleton()) {
 			return $provider->getService();
 		}
-		if (!empty($this->services[$service])) {
-			return $this->services[$service];
-		}
-		$this->services[$service] = $provider->getService();
-		return $this->services[$service];
+		return $this->services[$identity];
 	}
 
 	/**
-	 * @param string[] $services
-	 * @return object[]
+	 * @param array $services
+	 * @return array
 	 * @throws ServiceIsNotExistsException
 	 */
 	public function getServicesArray(array $services): array
@@ -84,19 +100,15 @@ final class ServiceContainer
 	}
 
 	/**
-	 * @param ServiceProviderInterface $provider
-	 */
-	private function loadService(ServiceProviderInterface $provider): void
-	{
-		$provider->up();
-		$this->bind($provider);
-	}
-
-	/**
 	 * @param Response $response
 	 */
 	public function downProviders(Response $response): void
 	{
+		foreach ($this->services as $service) {
+			if ($service instanceof StoppableService) {
+				$service->stop();
+			}
+		}
 		foreach ($this->providers as $provider) {
 			$provider->down($response);
 		}

@@ -6,5 +6,5 @@ use Core\Services\RouterService;
 /** @var RouterService $router */
 $router = Application::getInstance()->getServiceContainer()->getService(\Core\Services\RouterService::class);
 
-$router->get('/', \Core\Controllers\Api\v1\IndexController::class, 'index');
-$router->fallback(\Core\Controllers\Api\v1\IndexController::class, 'index');
+$router->get('/', \Core\Controllers\Api\v1\IndexController::class, 'index',  ['protectors' => ['throttle']]);
+$router->fallback(\Core\Controllers\Api\v1\IndexController::class, 'index', ['protectors' => ['throttle']]);

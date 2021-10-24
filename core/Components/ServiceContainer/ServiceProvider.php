@@ -19,13 +19,20 @@ abstract class ServiceProvider implements ServiceProviderInterface
 	protected bool $isSingleton = false;
 
 	/**
+	 * @var string
+	 */
+	protected string $identity;
+
+	/**
 	 * @param object $service
 	 * @param bool $isSingleton
+	 * @param string|null $identity
 	 */
-	protected function register(object $service, bool $isSingleton = false): void
+	protected function register(object $service, bool $isSingleton = false, string $identity = null): void
 	{
 		$this->service = $service;
 		$this->isSingleton = $isSingleton;
+		is_null($identity) ? $this->identity = get_class($service) : $this->identity = $identity;
 	}
 
 	/**
@@ -54,6 +61,14 @@ abstract class ServiceProvider implements ServiceProviderInterface
 	public function down(Response $response): void
 	{
 
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getIdentity(): string
+	{
+		return $this->identity;
 	}
 
 }

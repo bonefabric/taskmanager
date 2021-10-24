@@ -3,8 +3,10 @@
 namespace Core\Services;
 
 use Core\Common\DefenderService\ProtectorInterface;
+use Core\Common\RouterService\Route;
+use Core\Components\ServiceContainer\Contracts\BootableService;
 
-final class DefenderService
+final class DefenderService implements BootableService
 {
 
 	/**
@@ -16,9 +18,13 @@ final class DefenderService
 	/**
 	 * @return bool
 	 */
-	public function accessed(): bool
+	public function accessed(Route $route): bool
 	{
 		return true;
 	}
 
+	public function boot(): void
+	{
+
+	}
 }

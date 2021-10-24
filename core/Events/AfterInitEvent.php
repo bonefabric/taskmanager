@@ -12,7 +12,7 @@ class AfterInitEvent extends Event
 	 * @var string[]
 	 */
 	protected array $listeners = [
-		StartPerformanceRecordListener::class,
+//		StartPerformanceRecordListener::class,
 	];
 
 }

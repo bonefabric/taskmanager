@@ -3,10 +3,12 @@
 namespace Core\Services;
 
 use Core\Common\PerformanceRecorderService\PerformanceRecordingException;
+use Core\Components\ServiceContainer\Contracts\BootableService;
+use Core\Components\ServiceContainer\Contracts\StoppableService;
 use DateInterval;
 use DateTime;
 
-final class PerformanceRecorderService
+final class PerformanceRecorderService implements BootableService, StoppableService
 {
 
 	/**
@@ -37,7 +39,7 @@ final class PerformanceRecorderService
 	/**
 	 * @throws PerformanceRecordingException
 	 */
-	public function startRecord(): void
+	private function startRecord(): void
 	{
 		if ($this->recording || $this->recorded) {
 			throw new PerformanceRecordingException('Performance recording is not finished or already finished.');
@@ -46,7 +48,7 @@ final class PerformanceRecorderService
 		$this->started_at = new DateTime();
 	}
 
-	public function finishRecord(): void
+	private function finishRecord(): void
 	{
 		$this->finished_at = new DateTime();
 		$this->recording = false;
@@ -65,4 +67,16 @@ final class PerformanceRecorderService
 		return $this->started_at->diff($this->finished_at);
 	}
 
+	/**
+	 * @throws PerformanceRecordingException
+	 */
+	public function boot(): void
+	{
+		$this->startRecord();
+	}
+
+	public function stop(): void
+	{
+		$this->finishRecord();
+	}
 }

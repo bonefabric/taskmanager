@@ -5,12 +5,13 @@ namespace Core\Services;
 use Core\Common\RouterService\Exceptions\RoutesAlreadyLoadedException;
 use Core\Common\RouterService\Route;
 use Core\Common\RouterService\RouteInterface;
+use Core\Components\ServiceContainer\Contracts\BootableService;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * TODO кэширование маршрутов
  */
-final class RouterService
+final class RouterService implements BootableService
 {
 
 	/**
@@ -56,9 +57,6 @@ final class RouterService
 	 */
 	public function handle(Request $request): ?RouteInterface
 	{
-		if (!$this->isRoutesLoaded) {
-			$this->loadRoutes();
-		}
 		foreach ($this->routes as $route) {
 			if ($route->check($request)) {
 				return $route;
@@ -76,6 +74,7 @@ final class RouterService
 	public function get(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_GET], $options);
+		$this->applyOptions($route, $options);
 		$this->applyGroupOptions($route);
 		$this->routes[] = $route;
 	}
@@ -89,6 +88,7 @@ final class RouterService
 	public function post(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_POST], $options);
+		$this->applyOptions($route, $options);
 		$this->applyGroupOptions($route);
 		$this->routes[] = $route;
 	}
@@ -102,6 +102,7 @@ final class RouterService
 	public function put(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_PUT], $options);
+		$this->applyOptions($route, $options);
 		$this->applyGroupOptions($route);
 		$this->routes[] = $route;
 	}
@@ -115,6 +116,7 @@ final class RouterService
 	public function patch(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_PATCH], $options);
+		$this->applyOptions($route, $options);
 		$this->applyGroupOptions($route);
 		$this->routes[] = $route;
 	}
@@ -128,6 +130,7 @@ final class RouterService
 	public function delete(string $path, string $controller, string $method = null, array $options = []): void
 	{
 		$route = new Route($path, $controller, $method, [RouteInterface::METHOD_DELETE], $options);
+		$this->applyOptions($route, $options);
 		$this->applyGroupOptions($route);
 		$this->routes[] = $route;
 	}
@@ -135,26 +138,20 @@ final class RouterService
 	/**
 	 * @param string $resource
 	 * @param string $controller
+	 * @param array $options
 	 */
-	public function resource(string $resource, string $controller): void
+	public function resource(string $resource, string $controller, array $options = []): void
 	{
 		$this->get('/' . $resource, $controller, 'index');
-		$this->get('/' . $resource . '/{id}', $controller, 'show', [
+		$options = array_merge([
 			'patterns' => [
 				'id' => '\d+'
 			]
-		]);
+		], $options);
+		$this->get('/' . $resource . '/{id}', $controller, 'show', $options);
 		$this->post('/' . $resource, $controller, 'create');
-		$this->patch('/' . $resource . '/{id}', $controller, 'edit', [
-			'patterns' => [
-				'id' => '\d+'
-			]
-		]);
-		$this->delete('/' . $resource . '/{id}', $controller, 'delete', [
-			'patterns' => [
-				'id' => '\d+'
-			]
-		]);
+		$this->patch('/' . $resource . '/{id}', $controller, 'edit', $options);
+		$this->delete('/' . $resource . '/{id}', $controller, 'delete', $options);
 	}
 
 	/**
@@ -175,7 +172,9 @@ final class RouterService
 	 */
 	public function fallback(string $controller, string $method = null, array $options = []): void
 	{
-		$this->fallbackRoute = new Route('', $controller, $method, RouteInterface::METHODS_ALL, $options);
+		$route = new Route('', $controller, $method, RouteInterface::METHODS_ALL, $options);
+		$this->applyOptions($route, $options);
+		$this->fallbackRoute = $route;
 	}
 
 	/**
@@ -189,6 +188,17 @@ final class RouterService
 	private function removeGroupOptions(): void
 	{
 		array_shift($this->currentGroupOptions);
+	}
+
+	/**
+	 * @param Route $route
+	 * @param array $options
+	 */
+	private function applyOptions(Route $route, array $options): void
+	{
+		if (isset($options['protectors'])) {
+			$route->addProtectors($options['protectors']);
+		}
 	}
 
 	/**
@@ -207,4 +217,11 @@ final class RouterService
 		}
 	}
 
+	/**
+	 * @throws RoutesAlreadyLoadedException
+	 */
+	public function boot(): void
+	{
+		$this->loadRoutes();
+	}
 }

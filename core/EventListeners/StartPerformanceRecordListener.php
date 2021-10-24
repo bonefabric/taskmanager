@@ -19,8 +19,8 @@ class StartPerformanceRecordListener extends EventListener
 	 */
 	public function handle(EventInterface $event): void
 	{
-		/** @var PerformanceRecorderService $performanceRecorder */
-		$performanceRecorder = Application::getInstance()->getServiceContainer()->getService(PerformanceRecorderService::class);
-		$performanceRecorder->startRecord();
+//		/** @var PerformanceRecorderService $performanceRecorder */
+//		$performanceRecorder = Application::getInstance()->getServiceContainer()->getService(PerformanceRecorderService::class);
+//		$performanceRecorder->startRecord();
 	}
 }

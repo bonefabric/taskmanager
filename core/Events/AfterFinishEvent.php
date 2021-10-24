@@ -12,7 +12,7 @@ class AfterFinishEvent extends Event
 	 * @var string[]
 	 */
 	protected array $listeners = [
-		FinishPerformanceRecordListener::class,
+//		FinishPerformanceRecordListener::class,
 	];
 
 }

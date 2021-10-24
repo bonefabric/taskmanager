@@ -4,6 +4,9 @@ namespace Core\Components\ServiceContainer\Contracts;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Service provider interface
+ */
 interface ServiceProviderInterface
 {
 
@@ -24,5 +27,9 @@ interface ServiceProviderInterface
 	 */
 	public function getService(): object;
 
+	/**
+	 * @return string
+	 */
+	public function getIdentity(): string;
 
 }
