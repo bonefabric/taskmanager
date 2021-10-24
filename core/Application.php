@@ -2,12 +2,15 @@
 
 namespace Core;
 
+use Core\Common\EventsService\InvalidListenerException;
 use Core\Common\RouterService\Exceptions\RoutesAlreadyLoadedException;
 use Core\Common\RouterService\RouteInterface;
 use Core\Components\Helpers\Template;
 use Core\Components\ServiceContainer\Exceptions\ServiceIsNotExistsException;
 use Core\Components\ServiceContainer\Exceptions\ServicesAlreadyLoadedException;
 use Core\Components\ServiceContainer\ServiceContainer;
+use Core\Events\AfterFinishEvent;
+use Core\Events\AfterInitEvent;
 use Core\Services\DefenderService;
 use Core\Services\DIService;
 use Core\Services\RouterService;
@@ -61,6 +64,7 @@ final class Application
 	}
 
 	/**
+	 * @throws InvalidListenerException
 	 * @throws ServicesAlreadyLoadedException
 	 */
 	public function init(): void
@@ -69,6 +73,8 @@ final class Application
 
 		$this->serviceContainer = new ServiceContainer();
 		$this->serviceContainer->loadServices();
+
+		(new AfterInitEvent())->dispatch();
 	}
 
 	/**
@@ -112,9 +118,13 @@ final class Application
 		$this->response = $controller->{$route->getControllerMethod()}(...array_values($route->getParams()));
 	}
 
+	/**
+	 * @throws InvalidListenerException
+	 */
 	public function finish(): void
 	{
 		$this->serviceContainer->downProviders($this->response);
+		(new AfterFinishEvent())->dispatch();
 		$this->response->send();
 	}
 

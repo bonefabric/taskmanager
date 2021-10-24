@@ -16,7 +16,7 @@ abstract class ServiceProvider implements ServiceProviderInterface
 	/**
 	 * @var bool
 	 */
-	protected bool $isSingleton;
+	protected bool $isSingleton = false;
 
 	/**
 	 * @param object $service

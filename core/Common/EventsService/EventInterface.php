@@ -2,7 +2,9 @@
 
 namespace Core\Common\EventsService;
 
-abstract class EventListener implements EventListenerInterface
+interface EventInterface
 {
+
+	public function dispatch(): void;
 
 }

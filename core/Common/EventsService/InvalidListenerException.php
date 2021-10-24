@@ -2,7 +2,9 @@
 
 namespace Core\Common\EventsService;
 
-abstract class EventListener implements EventListenerInterface
+use Exception;
+
+final class InvalidListenerException extends Exception
 {
 
 }

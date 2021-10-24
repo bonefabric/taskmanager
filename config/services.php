@@ -11,4 +11,5 @@ return [
 	\Core\ServiceProviders\DBServiceProvider::class,
 	\Core\ServiceProviders\CSRFServiceProvider::class,
 	\Core\ServiceProviders\EventsServiceProvider::class,
+	\Core\ServiceProviders\PerformanceRecorderServiceProvider::class,
 ];
