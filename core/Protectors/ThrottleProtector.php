@@ -3,7 +3,6 @@
 namespace Core\Protectors;
 
 use Core\Common\DefenderService\Protector;
-use Symfony\Component\HttpFoundation\Request;
 
 final class ThrottleProtector extends Protector
 {
