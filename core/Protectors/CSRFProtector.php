@@ -12,7 +12,7 @@ final class CSRFProtector extends Protector
 	 */
 	public function check(): bool
 	{
-		return true;
+		return false;
 	}
 
 }

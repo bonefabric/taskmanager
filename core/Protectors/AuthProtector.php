@@ -12,7 +12,6 @@ final class AuthProtector extends Protector
 	 */
 	public function check(): bool
 	{
-		dump('awd');
 		return true;
 	}
 

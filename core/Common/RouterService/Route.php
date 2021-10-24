@@ -2,7 +2,6 @@
 
 namespace Core\Common\RouterService;
 
-use Core\Common\DefenderService\ProtectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Route implements RouteInterface
@@ -185,7 +184,7 @@ class Route implements RouteInterface
 	}
 
 	/**
-	 * @return ProtectorInterface[]
+	 * @return string[]
 	 */
 	public function getProtectors(): array
 	{

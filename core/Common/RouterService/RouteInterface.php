@@ -70,4 +70,9 @@ interface RouteInterface
 	 * @param array $protectors
 	 */
 	public function addProtectors(array $protectors): void;
+
+	/**
+	 * @return string[]
+	 */
+	public function getProtectors(): array;
 }
