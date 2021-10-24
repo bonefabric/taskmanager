@@ -3,11 +3,12 @@
 namespace Core\Entity;
 
 use Core\Common\Doctrine\SoftDeletes;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
 
@@ -42,30 +43,30 @@ class User
 	protected string $password;
 
 	/**
-	 * @Column(type="integer")
-	 * @OneToOne(targetEntity="Core\Entity\Role")
+	 * @OneToOne(targetEntity="Role")
+	 * @JoinColumn(name="role_ref", referencedColumnName="id")
 	 */
-	protected int $role_ref;
+	protected Role $role;
 
 	/**
-	 * @Column(type="datetime")
+	 * @Column(type="datetime_immutable")
 	 */
-	protected DateTime $created_at;
+	protected DateTimeImmutable $created_at;
 
 	/**
-	 * @Column(type="datetime")
+	 * @Column(type="datetime_immutable")
 	 */
-	protected DateTime $updated_at;
+	protected DateTimeImmutable $updated_at;
 
 	/**
-	 * @Column(type="datetime", nullable=true)
+	 * @Column(type="datetime_immutable", nullable=true)
 	 */
-	protected DateTime $deleted_at;
+	protected DateTimeImmutable $deleted_at;
 
 	public function __construct()
 	{
-		$this->created_at = new DateTime();
-		$this->updated_at = new DateTime();
+		$this->created_at = new DateTimeImmutable();
+		$this->updated_at = new DateTimeImmutable();
 	}
 
 	/**
@@ -109,44 +110,43 @@ class User
 	}
 
 	/**
-	 * @return int
+	 * @return Role
 	 */
-	public function getRoleRef(): int
+	public function getRole(): Role
 	{
-		return $this->role_ref;
+		return $this->role;
 	}
 
 	/**
-	 * @param int $role_ref
+	 * @param Role $role
 	 */
-	public function setRoleRef(int $role_ref): void
+	public function setRole(Role $role): void
 	{
-		$this->role_ref = $role_ref;
+		$this->role = $role;
 	}
 
 	/**
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
-	public function getCreatedAt(): DateTime
+	public function getCreatedAt(): DateTimeImmutable
 	{
 		return $this->created_at;
 	}
 
 	/**
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
-	public function getUpdatedAt(): DateTime
+	public function getUpdatedAt(): DateTimeImmutable
 	{
 		return $this->updated_at;
 	}
 
 	/**
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
-	public function getDeletedAt(): DateTime
+	public function getDeletedAt(): DateTimeImmutable
 	{
 		return $this->deleted_at;
 	}
-
 
 }

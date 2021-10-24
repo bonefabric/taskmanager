@@ -2,14 +2,14 @@
 
 namespace Core\Common\Doctrine;
 
-use DateTime;
+use DateTimeImmutable;
 
 trait SoftDeletes
 {
 
 	public function softDelete(): void
 	{
-		$this->deleted_at = new DateTime();
+		$this->deleted_at = new DateTimeImmutable();
 	}
 
 }

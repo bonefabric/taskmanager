@@ -3,7 +3,7 @@
 namespace Core\Entity;
 
 use Core\Common\Doctrine\SoftDeletes;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -26,29 +26,29 @@ class Role
 	protected int $id;
 
 	/**
-	 * @Column(type="string", length=50)
+	 * @Column(type="string", length=50, unique=true)
 	 */
 	protected string $name;
 
 	/**
-	 * @Column(type="datetime")
+	 * @Column(type="datetime_immutable")
 	 */
-	protected DateTime $created_at;
+	protected DateTimeImmutable $created_at;
 
 	/**
-	 * @Column(type="datetime")
+	 * @Column(type="datetime_immutable")
 	 */
-	protected DateTime $updated_at;
+	protected DateTimeImmutable $updated_at;
 
 	/**
-	 * @Column(type="datetime", nullable=true)
+	 * @Column(type="datetime_immutable", nullable=true)
 	 */
-	protected DateTime $deleted_at;
+	protected DateTimeImmutable $deleted_at;
 
 	public function __construct()
 	{
-		$this->created_at = new DateTime();
-		$this->updated_at = new DateTime();
+		$this->created_at = new DateTimeImmutable();
+		$this->updated_at = new DateTimeImmutable();
 	}
 
 	/**
@@ -76,25 +76,25 @@ class Role
 	}
 
 	/**
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
-	public function getCreatedAt(): DateTime
+	public function getCreatedAt(): DateTimeImmutable
 	{
 		return $this->created_at;
 	}
 
 	/**
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
-	public function getUpdatedAt(): DateTime
+	public function getUpdatedAt(): DateTimeImmutable
 	{
 		return $this->updated_at;
 	}
 
 	/**
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
-	public function getDeletedAt(): DateTime
+	public function getDeletedAt(): DateTimeImmutable
 	{
 		return $this->deleted_at;
 	}
