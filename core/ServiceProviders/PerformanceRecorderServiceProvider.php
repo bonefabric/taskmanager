@@ -24,14 +24,12 @@ class PerformanceRecorderServiceProvider extends ServiceProvider
 	 */
 	public function down(Response $response): void
 	{
-		dump('down');
-//		if ($_ENV['DEBUG']) {
-//			/** @var PerformanceRecorderService $performanceService */
-//			$performanceService = Application::getInstance()->getServiceContainer()->getService(PerformanceRecorderService::class);
-//
-//			dump($performanceService);
-//			$performance = $performanceService->getPerformance();
-//			$response->headers->add(['X-Performance' => $performance->s + $performance->f]);
-//		}
+		if ($_ENV['DEBUG']) {
+			/** @var PerformanceRecorderService $performanceService */
+			$performanceService = Application::getInstance()->getServiceContainer()->getService(PerformanceRecorderService::class);
+
+			$performance = $performanceService->getPerformance();
+			$response->headers->add(['X-Performance' => $performance->s + $performance->f]);
+		}
 	}
 }
