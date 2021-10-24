@@ -41,7 +41,7 @@ class {$class} extends Migrator
 	public function up(): void
 	{
 		Capsule::schema()->create('{$name}', function (\$table) {
-			/** @var Blueprint $table */
+			/** @var Blueprint \$table */
 			\$table->id();
 			
 		});

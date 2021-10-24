@@ -7,7 +7,7 @@ use Core\Services\RouterService;
 
 $router = Application::getInstance()->getServiceContainer()->getService(\Core\Services\RouterService::class);
 
-$router->group(['prefix' => 'api', 'protectors' => ['auth', 'throttle', 'csrf']], function () use ($router) {
+$router->group(['prefix' => 'api', 'protectors' => ['auth', 'throttle']], function () use ($router) {
 
 	$router->group(['prefix' => 'v1'], function () use ($router) {
 
