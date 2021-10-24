@@ -8,13 +8,14 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity(repositoryClass="Core\Repository\RoleRepository")
- * @Table(name="roles")
+ * @Entity(repositoryClass="Core\Repository\UserRepository")
+ * @Table(name="users")
  */
-class Role
+class User
 {
 	use SoftDeletes;
 
@@ -29,6 +30,22 @@ class Role
 	 * @Column(type="string", length=50)
 	 */
 	protected string $name;
+
+	/**
+	 * @Column(type="string", length=50, unique=true)
+	 */
+	protected string $email;
+
+	/**
+	 * @Column(type="string", length=50)
+	 */
+	protected string $password;
+
+	/**
+	 * @Column(type="integer")
+	 * @OneToOne(targetEntity="Core\Entity\Role")
+	 */
+	protected int $role_ref;
 
 	/**
 	 * @Column(type="datetime")
@@ -52,14 +69,6 @@ class Role
 	}
 
 	/**
-	 * @return int
-	 */
-	public function getId(): int
-	{
-		return $this->id;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getName(): string
@@ -73,6 +82,46 @@ class Role
 	public function setName(string $name): void
 	{
 		$this->name = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEmail(): string
+	{
+		return $this->email;
+	}
+
+	/**
+	 * @param string $email
+	 */
+	public function setEmail(string $email): void
+	{
+		$this->email = $email;
+	}
+
+	/**
+	 * @param string $password
+	 */
+	public function setPassword(string $password): void
+	{
+		$this->password = $password;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getRoleRef(): int
+	{
+		return $this->role_ref;
+	}
+
+	/**
+	 * @param int $role_ref
+	 */
+	public function setRoleRef(int $role_ref): void
+	{
+		$this->role_ref = $role_ref;
 	}
 
 	/**
@@ -98,5 +147,6 @@ class Role
 	{
 		return $this->deleted_at;
 	}
+
 
 }
